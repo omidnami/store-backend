@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('product')->group(function () {
+    Route::post('/select/{id?}', [\App\Http\Controllers\ProductController::class,'select']);
+    Route::post('/insert', [\App\Http\Controllers\ProductController::class,'insert']);
+    Route::post('/update', [\App\Http\Controllers\ProductController::class,'update']);
+    Route::post('/delete', [\App\Http\Controllers\ProductController::class,'delete']);
+});
