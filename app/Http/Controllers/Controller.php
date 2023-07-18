@@ -14,5 +14,14 @@ class Controller extends BaseController
     public function construct(){
         App::setLocale('en');
         session()->put('locale', 'en');
+        if (!App\Models\conf::all()->count()){
+            App\Models\conf::create([
+                'title' => 'title your site',
+                'domain' => 'example.com',
+                'logo' => '',
+                'icon' => '',
+                'lang' => 'EN'
+            ]);
+        }
     }
 }
