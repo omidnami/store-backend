@@ -31,6 +31,13 @@ Route::prefix('product_cat')->group(function () {
     Route::post('/delete', [\App\Http\Controllers\ProductCatController::class,'delete']);
 });
 
+Route::prefix('product_dynamic')->group(function () {
+    Route::post('/select/{pid?}', [\App\Http\Controllers\ProductDynamic::class,'select']);
+    Route::post('/insert', [\App\Http\Controllers\ProductDynamic::class,'insert']);
+    Route::post('/update', [\App\Http\Controllers\ProductDynamic::class,'update']);
+    Route::post('/delete', [\App\Http\Controllers\ProductDynamic::class,'delete']);
+});
+
 Route::prefix('attribute')->group(function () {
     Route::post('/select/{id?}', [\App\Http\Controllers\AttrController::class,'select']);
     Route::post('/select/cat/{cid?}', [\App\Http\Controllers\AttrController::class,'select_cat']);

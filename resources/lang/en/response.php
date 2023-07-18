@@ -11,4 +11,7 @@ return [
     'cat_added' => 'category added successfully',
     'cat_updated' => 'category updated successfully',
     'cat_deleted' => 'category deleted successfully',
+    'item_added' => 'dynamic added successfully',
+    'item_updated' => 'item updated successfully',
+    'item_deleted' => 'item deleted successfully',
 ];
