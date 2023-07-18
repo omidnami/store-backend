@@ -24,6 +24,13 @@ Route::prefix('product')->group(function () {
     Route::post('/delete', [\App\Http\Controllers\ProductController::class,'delete']);
 });
 
+Route::prefix('product_cat')->group(function () {
+    Route::post('/select/{id?}', [\App\Http\Controllers\ProductCatController::class,'select']);
+    Route::post('/insert', [\App\Http\Controllers\ProductCatController::class,'insert']);
+    Route::post('/update', [\App\Http\Controllers\ProductCatController::class,'update']);
+    Route::post('/delete', [\App\Http\Controllers\ProductCatController::class,'delete']);
+});
+
 Route::prefix('attribute')->group(function () {
     Route::post('/select/{id?}', [\App\Http\Controllers\AttrController::class,'select']);
     Route::post('/select/cat/{cid?}', [\App\Http\Controllers\AttrController::class,'select_cat']);
