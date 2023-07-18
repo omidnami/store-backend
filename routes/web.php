@@ -23,3 +23,19 @@ Route::prefix('product')->group(function () {
     Route::post('/update', [\App\Http\Controllers\ProductController::class,'update']);
     Route::post('/delete', [\App\Http\Controllers\ProductController::class,'delete']);
 });
+
+Route::prefix('attribute')->group(function () {
+    Route::post('/select/{id?}', [\App\Http\Controllers\AttrController::class,'select']);
+    Route::post('/select/cat/{cid?}', [\App\Http\Controllers\AttrController::class,'select_cat']);
+    Route::post('/insert', [\App\Http\Controllers\AttrController::class,'insert']);
+    Route::post('/update', [\App\Http\Controllers\AttrController::class,'update']);
+    Route::post('/delete', [\App\Http\Controllers\AttrController::class,'delete']);
+});
+
+
+Route::get('/powered/{PIN}',function ($PIN){
+    if ($PIN == 1317){
+        return 'powered by omid nami';
+    }
+    return 'bad request';
+});

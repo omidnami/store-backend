@@ -19,7 +19,7 @@ class CreateProductAttrTypesTable extends Migration
             $table->string('title');
             $table->bigInteger('cid'); // product cat id " 0 = all cats"
             $table->string('type'); //input type (radio, select, textInput)
-            $table->string('data'); // radio select data values
+            $table->string('data')->nullable(); // radio select data values
             $table->timestamps();
         });
     }
