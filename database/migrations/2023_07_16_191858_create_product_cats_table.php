@@ -20,6 +20,9 @@ class CreateProductCatsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->bigInteger('cid'); // cid parent id category
+            $table->string('uniqueId');
+            $table->string('lang');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

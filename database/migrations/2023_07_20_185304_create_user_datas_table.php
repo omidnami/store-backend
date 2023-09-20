@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserDataTable extends Migration
+class CreateUserDatasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateUserDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_data', function (Blueprint $table) {
+        Schema::create('user_datas', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger(\App\Models\User::class);
-            $table->string('social')->nullable();
-            $table->string('person_data')->nullable();
+            $table->bigInteger('user_id')->unique();
+            $table->json('social')->nullable();
+            $table->json('person_data')->nullable();
             $table->bigInteger('rang')->default(0);
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreateUserDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_data');
+        Schema::dropIfExists('user_datas');
     }
 }

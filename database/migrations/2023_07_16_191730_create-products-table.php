@@ -17,10 +17,23 @@ class CreateProductsTable extends Migration
         // product description -> article_table
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->string('price'); //json object price, discount, expireDiscount
-            $table->integer('sk')->unique(); // sk number or serial generate 5 digits
+            $table->string('title')->nullable();
+            $table->string('slug')->unique()->nullable();
+            $table->json('cat');
+            $table->string('mainCat')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('model')->nullable();
+            $table->string('type')->nullable();
+            $table->boolean('orginal')->default(true);
+            $table->json('noghat')->nullable();
+            $table->longText('text')->nullable();
+            $table->integer('sk'); // sk number or serial generate 8 digits
+            $table->string('uniqueId');
+            $table->string('lang');
+            $table->boolean('status')->default(true);
+            $table->json('box')->nullable();
+            $table->json('settings')->nullable();
+            $table->bigInteger('user');
             $table->timestamps();
         });
     }

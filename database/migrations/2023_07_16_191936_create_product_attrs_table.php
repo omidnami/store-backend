@@ -16,9 +16,10 @@ class CreateProductAttrsTable extends Migration
         //attr data for single product
         Schema::create('product_attrs', function (Blueprint $table) {
             $table->id();
-            $table->string('value');
-            $table->bigInteger('aid'); // attr id
+            $table->string('value')->nullable();
+            $table->bigInteger('aid')->nullable(); // attr id
             $table->bigInteger('pid'); // product id
+            $table->json('data')->nullable(); // product id
             $table->timestamps();
         });
     }

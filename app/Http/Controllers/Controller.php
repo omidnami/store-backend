@@ -13,7 +13,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function construct(){
         App::setLocale('en');
-        session()->put('locale', 'en');
+        session()->put('locale', 'fa');
         if (!App\Models\conf::all()->count()){
             App\Models\conf::create([
                 'title' => 'title your site',

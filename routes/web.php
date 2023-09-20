@@ -25,20 +25,49 @@ Route::get('/', function () {
     return view('welcome');
 });
 //Route::prefix('api/v1/')->middleware([\App\Http\Middleware\DataUserSave::class])->group(function () {
-Route::prefix('api/v1/')->group(function () {
+Route::prefix('api/v1/')->middleware(\App\Http\Middleware\DataUserSave::class)->group(function () {
 
     Route::prefix('product')->group(function () {
-        Route::post('/select/{id?}', [\App\Http\Controllers\ProductController::class,'select']);
+        Route::post('/select/{status?}', [\App\Http\Controllers\ProductController::class,'select']);
         Route::post('/insert', [\App\Http\Controllers\ProductController::class,'insert']);
+        Route::post('/store', [\App\Http\Controllers\ProductController::class,'store']);
         Route::post('/update', [\App\Http\Controllers\ProductController::class,'update']);
         Route::post('/delete', [\App\Http\Controllers\ProductController::class,'delete']);
+        Route::post('/delete_lang', [\App\Http\Controllers\ProductController::class,'deleteLang']);
+        Route::post('/add_gallery', [\App\Http\Controllers\ProductController::class,'addGallery']);
+        Route::post('/remove_gallery', [\App\Http\Controllers\ProductController::class,'removeGallery']);
+        Route::post('/default_gallery', [\App\Http\Controllers\ProductController::class,'defaultGallery']);
+        Route::post('/get_ext', [\App\Http\Controllers\ProductController::class,'extend']);
+        Route::post('/set_settings', [\App\Http\Controllers\ProductController::class,'setSetting']);
+        Route::post('/search_engin/insert', [\App\Http\Controllers\ProductController::class,'searchEnginInsert']);
+        Route::post('/search_engin/select', [\App\Http\Controllers\ProductController::class,'searchEnginSelect']);
     });
 
     Route::prefix('product_cat')->group(function () {
         Route::post('/select/{id?}', [\App\Http\Controllers\ProductCatController::class,'select']);
+        Route::post('/select_detail/{id?}', [\App\Http\Controllers\ProductCatController::class,'selectByDetail']);
         Route::post('/insert', [\App\Http\Controllers\ProductCatController::class,'insert']);
         Route::post('/update', [\App\Http\Controllers\ProductCatController::class,'update']);
         Route::post('/delete', [\App\Http\Controllers\ProductCatController::class,'delete']);
+        Route::post('/get_ext', [\App\Http\Controllers\ProductCatController::class,'CatExtend']);
+        Route::post('/select_child/{unique}', [\App\Http\Controllers\ProductCatController::class,'selectChildByLang']);
+    });
+
+    Route::prefix('depo')->group(function () {
+        Route::post('/depo_servisce', [\App\Http\Controllers\DepoController::class,'depoServisce']);
+        Route::post('/insert/depomain', [\App\Http\Controllers\DepoController::class,'insert']);
+        Route::post('/select', [\App\Http\Controllers\DepoController::class,'select']);
+    });
+
+    Route::prefix('brand')->group(function () {
+        Route::post('/select/{status?}', [\App\Http\Controllers\Brand::class,'select']);
+        Route::post('/insert', [\App\Http\Controllers\Brand::class,'insert']);
+        Route::post('/update', [\App\Http\Controllers\Brand::class,'update']);
+        Route::post('/delete', [\App\Http\Controllers\Brand::class,'delete']);
+        Route::post('/get_ext', [\App\Http\Controllers\Brand::class,'extend']);
+        Route::post('/delete_lang', [\App\Http\Controllers\Brand::class,'deleteLang']);
+        Route::post('/select_detail', [\App\Http\Controllers\Brand::class,'selectByDetail']);
+
     });
 
     Route::prefix('product_dynamic')->group(function () {
@@ -51,15 +80,20 @@ Route::prefix('api/v1/')->group(function () {
     Route::prefix('attribute')->group(function () {
         Route::post('/select/{id?}', [\App\Http\Controllers\AttrController::class,'select']);
         Route::post('/select/cat/{cid?}', [\App\Http\Controllers\AttrController::class,'select_cat']);
+        Route::post('/select/gp/cat', [\App\Http\Controllers\AttrController::class,'selectGpByCat']);
         Route::post('/insert', [\App\Http\Controllers\AttrController::class,'insert']);
         Route::post('/update', [\App\Http\Controllers\AttrController::class,'update']);
         Route::post('/delete', [\App\Http\Controllers\AttrController::class,'delete']);
+        Route::post('/Attr_gp/get_ext', [\App\Http\Controllers\AttrController::class,'CatExtend']);
+        Route::post('/get_ext', [\App\Http\Controllers\AttrController::class,'attrExtend']);
+        Route::post('/delete_lang', [\App\Http\Controllers\AttrController::class,'deleteLang']);
     });
 
     Route::prefix('user')->group(function () {
-        Route::get('/select/{id?}', [\App\Http\Controllers\UserController::class,'select']);
+        Route::post('/select/{id?}', [\App\Http\Controllers\UserController::class,'select']);
+        Route::post('/trash_list', [\App\Http\Controllers\UserController::class,'trashList']);
         Route::post('/insert', [\App\Http\Controllers\UserController::class,'insert']);
-        Route::post('/update', [\App\Http\Controllers\UserController::class,'update']);
+        Route::post('/update/{id}', [\App\Http\Controllers\UserController::class,'update']);
         Route::post('/delete', [\App\Http\Controllers\UserController::class,'delete']);
         Route::get('/search', [\App\Http\Controllers\UserController::class,'search']);
     });
@@ -76,9 +110,21 @@ Route::prefix('api/v1/')->group(function () {
             }
             return false;
         });
+        Route::post('/check_user_name', function (Request $request){
+            if ($request->userName){
+                $user = \App\Models\User::where('userName',$request->userName)->first();
+                error_log($user);
+                if ($user){
+                    return 'err';
+                }else {
+                    return 'ok';
+                }
+            }
+            return false;
+        });
     });
 });
-Route::get('/powered/{PIN}',function ($PIN){
+Route::get('/powered/{PIN}',function ($PIN) {
     if ($PIN == 1317){
         return 'powered by omid nami';
     }

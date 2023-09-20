@@ -20,6 +20,7 @@ class CreateFilesTable extends Migration
             $table->string('type'); // blog, product, gallery,...
             $table->string('url')->nullable();
             $table->binary('file')->nullable();
+            $table->boolean('def')->default(false);
             $table->string('data'); // json data file (size,format,...)
             $table->timestamps();
         });

@@ -14,11 +14,24 @@ class CreateProductDynamicsTable extends Migration
     public function up()
     {
         // dynamic colors, size and... for single product
+        //type
+        //value
+        //status
+        //depo
+        //price
+        //img
+        //pid
+        //data
         Schema::create('product_dynamics', function (Blueprint $table) {
             $table->id();
             $table->string('value');
             $table->string('type'); // type title (color, size, ...)
             $table->bigInteger('pid'); // product id
+            $table->boolean('status')->default(true);
+            $table->json('depo')->nullable();
+            $table->json('price')->nullable();
+            $table->bigInteger('img')->default(0);
+            $table->json('data');
             $table->timestamps();
         });
     }

@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductDynamic extends Model
+class DepoLocation extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'type',
-        'value',
-        'status',
+        'title',
+        'maxQuty',
+        'address',
         'depo',
-        'price',
-        'img',
-        'pid',
-        'data',
+        'row',
+        'Shelf',
+        'depoMan',
+        'user',
+        'did',
     ];
-
 }

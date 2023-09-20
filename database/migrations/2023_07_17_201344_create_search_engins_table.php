@@ -20,6 +20,9 @@ class CreateSearchEnginsTable extends Migration
             $table->string('canonical')->nullable();
             $table->bigInteger('pid');
             $table->string('type');
+            $table->string('video')->nullable();
+            $table->json('blogs')->nullable();
+            $table->string('cat')->nullable();
             $table->timestamps();
         });
     }

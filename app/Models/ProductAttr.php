@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ProductAttr extends Model
 {
     use HasFactory;
-    protected $fillable = ['value', 'aid', 'pid' ];
+    protected $fillable = ['value', 'aid', 'pid', 'data' ];
 
 }
