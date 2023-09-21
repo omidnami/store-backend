@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +24,13 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = User::find(23);
+    $lang = 'EN';
+    event(new \App\Events\RegisterNotyEvent($user, $lang));
+    //dispatch(new \App\Listeners\SendRegisterListener($user));
+    return 'welcome';
 });
+
 //Route::prefix('api/v1/')->middleware([\App\Http\Middleware\DataUserSave::class])->group(function () {
 Route::prefix('api/v1/')->middleware(\App\Http\Middleware\DataUserSave::class)->group(function () {
 
@@ -41,6 +48,7 @@ Route::prefix('api/v1/')->middleware(\App\Http\Middleware\DataUserSave::class)->
         Route::post('/set_settings', [\App\Http\Controllers\ProductController::class,'setSetting']);
         Route::post('/search_engin/insert', [\App\Http\Controllers\ProductController::class,'searchEnginInsert']);
         Route::post('/search_engin/select', [\App\Http\Controllers\ProductController::class,'searchEnginSelect']);
+        Route::post('/get_dynamic', [\App\Http\Controllers\ProductController::class,'getDynamic']);
     });
 
     Route::prefix('product_cat')->group(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ResponseHelper;
 use App\Models\Article;
+use App\Models\DepoLocation;
 use App\Models\File;
 use App\Models\Product;
 use App\Models\ProductAttr;
@@ -450,4 +451,19 @@ class ProductController extends Controller
             'canonical' => $seo->canonical??''
         ];
     }
+
+    public function getDynamic(Request $request) {
+        $lang = $request->header('Lang')??\App\Models\Setting::first()->lang;
+        $pro = Product::select('id')->where('uniqueId',$request->unique)->where('lang',$lang)->first();
+        $dynamic = ProductDynamic::select('type','value','depo', 'id')
+            ->where('status',true)
+            ->where('pid', $pro->id)->get();
+        $depos = DepoLocation::all();
+        return json_encode((object)[
+            'msg'=>'dynamic_set',
+            'data'=> $dynamic,
+            'depos'=> $depos
+        ]);
+    }
+
 }
