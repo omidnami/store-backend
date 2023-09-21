@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use App;
+use Illuminate\Support\Facades\Auth;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class Controller extends BaseController
 {
@@ -23,5 +26,12 @@ class Controller extends BaseController
                 'lang' => 'EN'
             ]);
         }
+    }
+
+    public function profile(Request $request)
+    {
+        $user = Auth::user();
+
+        return response()->json(['user' => $user]);
     }
 }

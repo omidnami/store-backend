@@ -106,31 +106,6 @@ Route::prefix('api/v1/')->middleware(\App\Http\Middleware\DataUserSave::class)->
         Route::get('/search', [\App\Http\Controllers\UserController::class,'search']);
     });
 
-    Route::prefix('auth')->group(function () {
-        Route::post('/check_admin', [\App\Http\Controllers\AuthController::class,'checkAdmin']);
-        Route::post('/login', [\App\Http\Controllers\AuthController::class,'login']);
-        Route::post('/logout', [\App\Http\Controllers\AuthController::class,'logout']);
-        Route::post('/check_login', function (Request $request){
-            if ($request->token){
-                $user = \App\Models\User::where('token',$request->token)->where('rol', 1)->first();
-                        error_log($request->token);
-                return $user;
-            }
-            return false;
-        });
-        Route::post('/check_user_name', function (Request $request){
-            if ($request->userName){
-                $user = \App\Models\User::where('userName',$request->userName)->first();
-                error_log($user);
-                if ($user){
-                    return 'err';
-                }else {
-                    return 'ok';
-                }
-            }
-            return false;
-        });
-    });
 });
 Route::get('/powered/{PIN}',function ($PIN) {
     if ($PIN == 1317){

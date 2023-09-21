@@ -40,14 +40,22 @@ class AuthController extends Controller
         unset($request['userName']);
 
         $token = Auth::attempt($credentials);
+
         if (!$token) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'Unauthorized',
+                'status' => false,
+                'msg' => 'note_valide',
             ], 401);
         }
 
+
         $user = Auth::user();
+        if ($user->rol !== 1){
+            return response()->json([
+                'status' => false,
+                'msg' => 'note_access',
+            ], 403);
+        }
         $token_api = time().$_SERVER['REMOTE_ADDR'].$user->id.rand(100000,9999999);
         $token_api = Hash::make((string)$token_api);
         User::find($user->id)->update([
@@ -61,7 +69,8 @@ class AuthController extends Controller
             'authorisation' => [
                 'token' => $token_api,
                 'type' => 'bearer',
-            ]
+            ],
+            'msg' => 'success'
         ]);
 
     }
@@ -136,6 +145,15 @@ class AuthController extends Controller
         }
         return json_encode((object)['status'=>false, 'msg'=>'user note access']);
 
+    }
+
+    public function check(Request $request) {
+        error_log($request->token);
+        $user = User::where('token', $request->token)->where('rol', 1)->first();
+        if ($user){
+            return json_encode((object)['status'=>true,'user'=>$user,'msg'=>'hase_Login']);
+        }
+        return json_encode((object)['status'=>false,'user'=>null,'msg'=>'dont_access']);
     }
 
 }
