@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ResponseHelper;
-use App\Models\Product;
+use App\Http\Controllers\Controller;
 use App\Models\ProductAttrType;
-use App\Models\ProductCat;
-use App\Models\SearchEngin;
-use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
 class AttrController extends Controller

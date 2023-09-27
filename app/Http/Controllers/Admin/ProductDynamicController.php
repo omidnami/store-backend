@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 
 use App\Helpers\ResponseHelper;
-use App\Models\Product;
+use App\Http\Controllers\Controller;
 use App\Models\ProductDynamic;
-use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\Request;
 
 class ProductDynamicController extends Controller
 {

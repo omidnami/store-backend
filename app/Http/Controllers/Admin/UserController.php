@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Utils;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserData;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
-use function PHPUnit\Framework\isEmpty;
-use function Symfony\Component\String\u;
 
 class UserController extends Controller
 {

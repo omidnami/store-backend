@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Models\Article;
-use App\Models\ProductCat;
 use App\Models\SearchEngin;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Intervention\Image;
+
 class Brand extends Controller
 {
     //
@@ -87,7 +88,7 @@ class Brand extends Controller
 
             if ($request->file) {
                 error_log($request->file);
-                \App\Http\Controllers\File::serverSide([
+                Admin\File::serverSide([
                     'file' => $request->file,
                     'slug' => $request->slug,
                     'pid' => $brand->id,
@@ -191,7 +192,7 @@ class Brand extends Controller
                     File::fileDelete($i->url);
                 }
             }
-            \App\Http\Controllers\File::serverSide([
+            Admin\File::serverSide([
                 'file' => $request->file,
                 'slug' => $brand->slug,
                 'pid' => $brand->id,

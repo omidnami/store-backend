@@ -17,8 +17,15 @@ class CreateConfsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('domain');
-            $table->string('logo');
-            $table->string('icon');
+            $table->string('logoDark')->nullable();
+            $table->string('logoLight')->nullable();
+            $table->string('icon')->nullable();
+            $table->boolean('status')->default(true);
+            $table->text('tag');
+            $table->text('des');
+            $table->json('style')->nullable();
+            $table->longText('css')->nullable();
+            $table->longText('js')->nullable();
             $table->string('lang');
             $table->timestamps();
         });

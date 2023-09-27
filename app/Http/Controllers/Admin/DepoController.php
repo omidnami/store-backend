@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Controllers\Controller;
 use App\Models\DepoLocation;
-use App\Models\Product;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
 class DepoController extends Controller

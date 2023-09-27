@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ResponseHelper;
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\DepoLocation;
 use App\Models\File;
@@ -257,7 +259,7 @@ class ProductController extends Controller
             if ($f->count()){
                 foreach ($f as $i){
                     File::find($i->id)->delete();
-                    \App\Http\Controllers\File::fileDelete($i->url);
+                    Admin\File::fileDelete($i->url);
                 }
             }
             //tanavo
@@ -287,7 +289,7 @@ class ProductController extends Controller
         error_log($selectFile);
         if ($request->file) {
             //error_log($request->file);
-           $res= \App\Http\Controllers\File::serverSide([
+           $res= Admin\File::serverSide([
                 'file' => $request->file,
                 'slug' => 'product_img',
                 'pid' => $product->id,
@@ -320,7 +322,7 @@ class ProductController extends Controller
         }
         //remove file
 
-        \App\Http\Controllers\File::fileDelete($request->url);
+        Admin\File::fileDelete($request->url);
 
         return json_encode((object)[
             'status' => true,

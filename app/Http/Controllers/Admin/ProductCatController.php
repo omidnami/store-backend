@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Helpers\ResponseHelper;
-use App\Models\Article;
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\ProductCat;
 use App\Models\SearchEngin;
-use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 
 class ProductCatController extends Controller
 {
@@ -94,7 +93,7 @@ class ProductCatController extends Controller
 
                 if ($request->file) {
                     error_log($request->file);
-                    \App\Http\Controllers\File::serverSide([
+                    Admin\File::serverSide([
                         'file' => $request->file,
                         'slug' => $request->slug,
                         'pid' => $cat->id,
@@ -147,7 +146,7 @@ class ProductCatController extends Controller
 
 
                 error_log($request->file);
-                \App\Http\Controllers\File::serverSide([
+                Admin\File::serverSide([
                     'file' => $request->file,
                     'slug' => $request->slug,
                     'pid' => $cat->id,
@@ -180,7 +179,7 @@ class ProductCatController extends Controller
 
             if ($request->file) {
                 error_log($request->file);
-                \App\Http\Controllers\File::serverSide([
+                Admin\File::serverSide([
                     'file' => $request->file,
                     'slug' => $request->slug,
                     'pid' => $cat->id,
