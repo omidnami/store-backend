@@ -46,7 +46,45 @@ class Product extends Controller
     }
 
     function single(Request $request) {
+        //unique
+        //sluh
+        //lang
+        $request->lang =$request->header('Lang')??\App\Models\Setting::first()->lang;
 
+        //quty
+        //price
+        //attr
+        //tanavo
+        //file
+        //depo
+        //article
+
+        error_log($request->unique);
+        $product = \App\Models\Product::where('lang', $request->lang)
+                            ->where('uniqueId', $request->unique)
+                            ->where('slug', $request->slug)
+                            ->first();
+        //        if no product get 404
+        if (!$product) {
+            return json_encode((object)['status'=>false, 'msg'=> 'not_fond']);
+        }
+
+        $ex = $this->exProduct($product->id);
+        $gallery = $this->gallery($product->id, 'products');
+        $seo = $this->searchEngin($product->id, 'products');
+        $tanavo = $this->tanavo($product->id);
+        $price = $this->price($product->id);
+        $art = $this->article($product->id, 'products');
+
+        return json_encode((object)[
+            'pro'=>$product,
+            'ex'=>json_decode($ex),
+            'gallery'=>$gallery,
+            'seo'=>$seo,
+            'dynamic'=>$tanavo,
+            'price' => $price,
+            'art' => $art
+            ]);
     }
 
     function search(Request $request) {

@@ -68,4 +68,110 @@ class Controller extends BaseController
 
         return json_encode((object)['img'=>$img,'lang'=>$lang,'cat'=>$cat,'brand'=>$brand,'defaultLang'=>$pro->lang,'price'=>$price,'vahed'=>$vahed]);
     }
+
+    public function gallery($id, $type) {
+        return File::select('url')->where('pid',$id)->where('type', $type)->get();
+
+    }
+
+    public function tanavo($id) {
+        $pro = Product::find($id);
+        $depo = ProductDynamic::where('pid', $pro->uniqueId)
+            ->where('lang', $pro->lang)
+            ->where('status', true)->get();
+        $res = [];
+        foreach ($depo as $item) {
+            $q = App\Models\Depo::where('productSk',$pro->sk)->where('dynamicId', $item->uniqueId)->sum('quty');
+            $item->q = $q;
+            $res[] = $item;
+        }
+        return $res;
+
+    }
+
+    public function attr($id) {}
+
+    public function comments($id, $type) {}
+
+    public function searchEngin($id, $type) {
+        return App\Models\SearchEngin::where('pid',$id)->where('type', $type)->first();
+    }
+
+    public function price($id) {
+        $pro = Product::find($id);
+        $dynamic = $this->tanavo($id);
+        // mojodi anbar
+        $depo = [];
+        // {dynamiqUnique:'575765', quty: 300, price: 2, discount: 0, date: 166587798544, vp:'' vd:''}
+        foreach ($dynamic as $item) {
+            $q = App\Models\Depo::where('productSk',$pro->sk)->where('dynamicId', $item->uniqueId)->sum('quty');
+            if ($q){
+                $depo[] = (object)[
+                    'dynamic' => $item->uniqueId,
+                    'quty' => $q,
+                    'price' => json_decode($item->price)->prc,
+                    'discount' => json_decode($item->price)->discount,
+                    'date' => json_decode($item->price)->date,
+                    'vp' => json_decode($item->price)->vahed,
+                    'vd' => json_decode($item->depo)->vahed,
+                ];
+            }
+
+        }
+        $price = 99999999999999999999999;
+        $discount = 99999999999999999999999;
+        $dyna = '';
+        $quty = 0;
+        $date = 0;
+        foreach ($depo as $item) {
+            if ((float)$item->price > 0 AND (float)$item->price < (float)$price){
+                $price = $item->price;
+                $discount = (int)$item->discount === 0?99999999999999999999999:$item->discount;
+                $dyna = $item->dynamic;
+                $quty = $item->quty;
+                $date = $item->date;
+            }
+            if ((float)$item->discount > 0 AND (float)$item->discount < (float)$discount AND $item->date > time()){
+                $discount = $item->discount;
+                $price = $item->price;
+                $dyna = $item->dynamic;
+                $quty = $item->quty;
+                $date = $item->date;
+            }
+        }
+
+        if ($discount === 99999999999999999999999)
+            $discount = 0;
+
+        return (object)['quty'=>$quty,'price'=>$price,'discount' => $discount, 'dynamic'=>$dyna,'date'=>$date];
+
+
+    }
+
+    public function depo($id) {
+        $pro = Product::find($id);
+        $dynamic = $this->tanavo($id);
+        // mojodi anbar
+        $depo = [];
+        // {dynamiqUnique:'575765', quty: 300, price: 2, discount: 0, date: 166587798544, vp:'' vd:''}
+        foreach ($dynamic as $item) {
+            $q = App\Models\Depo::where('productSk',$pro->sk)->where('dynamicId', $item->uniqueId)->sum('quty');
+            $depo[] = (object)[
+                'dynamic' => $item->uniqueId,
+                'quty' => $q,
+                'price' => json_decode($item->price)->prc,
+                'discount' => json_decode($item->price)->discount,
+                'date' => json_decode($item->price)->date,
+                'vp' => json_decode($item->price)->vahed,
+                'vd' => json_decode($item->quty)->vahed,
+            ];
+
+        }
+
+        return $depo;
+    }
+
+    public function article($id, $type) {
+        return App\Models\Article::where('pid', $id)->where('type', $type)->first();
+    }
 }

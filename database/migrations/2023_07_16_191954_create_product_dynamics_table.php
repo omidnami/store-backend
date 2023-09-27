@@ -26,12 +26,14 @@ class CreateProductDynamicsTable extends Migration
             $table->id();
             $table->string('value');
             $table->string('type'); // type title (color, size, ...)
-            $table->bigInteger('pid'); // product id
+            $table->string('pid'); // product unique
             $table->boolean('status')->default(true);
             $table->json('depo')->nullable();
             $table->json('price')->nullable();
             $table->bigInteger('img')->default(0);
             $table->json('data');
+            $table->string('lang');
+            $table->string('uniqueId');
             $table->timestamps();
         });
     }

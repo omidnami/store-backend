@@ -16,7 +16,7 @@ class CreateDeposTable extends Migration
         Schema::create('depos', function (Blueprint $table) {
             $table->id();
             $table->integer('productSk'); //کد اس کی کالا
-            $table->bigInteger('dynamicId')->default(0); //شناسه تنوع
+            $table->string('dynamicId'); //شناسه تنوع
             $table->bigInteger('quty'); //تعداد
             $table->string('partNumber'); // پارت نامبر
             $table->json('depoLoc'); // پارت نامبر

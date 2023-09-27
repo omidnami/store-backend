@@ -23,6 +23,7 @@ class CreateSearchEnginsTable extends Migration
             $table->string('video')->nullable();
             $table->json('blogs')->nullable();
             $table->string('cat')->nullable();
+            $table->string('link')->nullable();
             $table->timestamps();
         });
     }
