@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Setting extends Model
+class Menu extends Model
 {
     use HasFactory;
+    protected $table = 'menu';
     protected $fillable = [
-        'home',
-        'defaultLang'
+        'title',
+        'position',
+        'status',
+        'user',
+        'lang',
+        'uniqueId'
     ];
-
-
 }

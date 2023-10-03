@@ -23,7 +23,6 @@ class File extends Controller
 //        $image_resize = Image::make($data['file']->getRealPath());
 //        $image_resize->resize(300, 300);
 //        $image_resize->save(public_path($destinationPath.'/'.'md_'.$imageName));
-error_log($data['def']);
          \App\Models\File::create([
                 'title' => $data['slug'],
                 'pid' => $data['pid'],

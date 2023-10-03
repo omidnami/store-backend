@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBlogCatsTable extends Migration
+class CreateArticleCatTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateBlogCatsTable extends Migration
      */
     public function up()
     {
-        // category image and video gallery or filses -> files_table
-        // category description -> article_table
-        Schema::create('blog_cats', function (Blueprint $table) {
+        Schema::create('article_cat', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug');
-            $table->bigInteger('cid'); // cid parent id category
+            $table->string('slug')->unique();
+            $table->string('cid'); // cid parent id category
+            $table->string('uniqueId');
+            $table->string('lang');
+            $table->boolean('status')->default(true);
+            $table->bigInteger('uid');
             $table->timestamps();
         });
     }
@@ -31,7 +33,6 @@ class CreateBlogCatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blog_cats');
-
+        Schema::dropIfExists('article_cat');
     }
 }

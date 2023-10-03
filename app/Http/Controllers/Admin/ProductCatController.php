@@ -203,10 +203,8 @@ class ProductCatController extends Controller
 
     public function delete(Request $request) {
         $del = ProductCat::where('uniqueId',$request->unique)->get();
-        error_log($del);
 
         foreach ($del as $item) {
-            error_log($item->id);
             ProductCat::find($item->id)->update([
                 'status' => 0
             ]);

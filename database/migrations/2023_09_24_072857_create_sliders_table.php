@@ -16,14 +16,17 @@ class CreateSlidersTable extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('sub_title');
+            $table->string('sub_title')->nullable();
+            $table->string('bg')->nullable();
             $table->json('dynamictext')->nullable();
-            $table->string('link');
-            $table->string('linkText');
+            $table->string('link')->nullable();
+            $table->string('linkText')->nullable();
             $table->string('target')->default('blank');
             $table->string('uniqueId');
             $table->string('lang');
             $table->string('parent');
+            $table->bigInteger('user');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

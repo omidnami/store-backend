@@ -97,5 +97,73 @@ Route::prefix('v1/')->middleware(\App\Http\Middleware\DataUserSave::class)->grou
         Route::post('/delete', [\App\Http\Controllers\Admin\UserController::class,'delete']);
         Route::get('/search', [\App\Http\Controllers\Admin\UserController::class,'search']);
     });
+
+    Route::prefix('article')->group(function () {
+        Route::post('/cat/select/{id?}', [\App\Http\Controllers\Admin\ArticleCat::class,'select']);
+        Route::post('/cat/select_detail', [\App\Http\Controllers\Admin\ArticleCat::class,'selectByDetail']);
+        Route::post('/cat/trash', [\App\Http\Controllers\Admin\ArticleCat::class,'trash']);
+        Route::post('/trash_list', [\App\Http\Controllers\Admin\UserController::class,'trashList']);
+        Route::post('/cat/insert', [\App\Http\Controllers\Admin\ArticleCat::class,'insert']);
+        Route::post('/cat/update', [\App\Http\Controllers\Admin\ArticleCat::class,'update']);
+        Route::post('/cat/delete', [\App\Http\Controllers\Admin\ArticleCat::class,'delete']);
+        Route::post('/cat/get_ext', [\App\Http\Controllers\Admin\ArticleCat::class,'CatExtend']);
+        Route::post('/cat/delete_lang', [\App\Http\Controllers\Admin\ArticleCat::class,'deleteLang']);
+        Route::get('/cat/get_parent/{unique}/{lang}', function ($unique, $lang) {
+            $cat = \App\Models\ArticleCat::where('uniqueID', $unique)->where('lang', $lang)->first();
+            if (!$cat) {
+                $cat = \App\Models\ArticleCat::where('uniqueID', $unique)->first();
+            }
+            return $cat;
+        });
+        Route::post('/blog/select',[\App\Http\Controllers\Admin\BlogController::class,'select']);
+        Route::post('/blog/insert',[\App\Http\Controllers\Admin\BlogController::class,'insert']);
+        Route::post('/blog/update', [\App\Http\Controllers\Admin\BlogController::class,'update']);
+        Route::post('/delete', [\App\Http\Controllers\Admin\Brand::class,'delete']);
+        Route::post('/blog/get_ext', [\App\Http\Controllers\Admin\BlogController::class,'extend']);
+        Route::post('/delete_lang', [\App\Http\Controllers\Admin\Brand::class,'deleteLang']);
+        //page
+        Route::post('/page/select',[\App\Http\Controllers\Admin\PageController::class,'select']);
+        Route::post('/page/insert',[\App\Http\Controllers\Admin\PageController::class,'insert']);
+        Route::post('/page/update', [\App\Http\Controllers\Admin\PageController::class,'update']);
+        Route::post('/delete', [\App\Http\Controllers\Admin\PageController::class,'delete']);
+        Route::post('/page/get_ext', [\App\Http\Controllers\Admin\PageController::class,'extend']);
+        Route::post('/delete_lang', [\App\Http\Controllers\Admin\PageController::class,'deleteLang']);
+
+//        Route::get('/search', [\App\Http\Controllers\Admin\UserController::class,'search']);
+    });
+
+    Route::get('getConf/{lang}', function ($lang){
+        $conf = \App\Models\conf::where('lang',$lang)->first();
+        $setting = \App\Models\Setting::find(1);
+        $conf->defautLang = $setting->defaultLang;
+        return $conf;
+    });
+
+    Route::prefix('plugins')->group(function () {
+        //slider
+        Route::post('/slider/select', [\App\Http\Controllers\Admin\Plugins\SlidersController::class,'select']);
+        Route::post('/slider/select/detail', [\App\Http\Controllers\Admin\Plugins\SlidersController::class,'detail']);
+        Route::post('/trash', [\App\Http\Controllers\Admin\Plugins\SlidersController::class,'trashList']);
+        Route::post('/slider/insert', [\App\Http\Controllers\Admin\Plugins\SlidersController::class,'insert']);
+        Route::post('/update', [\App\Http\Controllers\Admin\UserController::class,'update']);
+        Route::post('/delete', [\App\Http\Controllers\Admin\UserController::class,'delete']);
+        Route::post('/slider/get_ext', [\App\Http\Controllers\Admin\Plugins\SlidersController::class,'extend']);
+        //text view
+        Route::post('/text_view/select', [\App\Http\Controllers\Admin\Plugins\TextView::class,'select']);
+        Route::post('/text_view/select/detail', [\App\Http\Controllers\Admin\Plugins\TextView::class,'detail']);
+        Route::post('/text_view/insert', [\App\Http\Controllers\Admin\Plugins\TextView::class,'insert']);
+        Route::post('/text_view/update', [\App\Http\Controllers\Admin\Plugins\TextView::class,'update']);
+        Route::post('/text_view/get_ext', [\App\Http\Controllers\Admin\Plugins\SlidersController::class,'extend']);
+        //menu
+        Route::post('/menu/select', [\App\Http\Controllers\Admin\Plugins\Menu::class,'select']);
+        Route::post('/menu/insert', [\App\Http\Controllers\Admin\Plugins\Menu::class,'insert']);
+        Route::post('/menu/update', [\App\Http\Controllers\Admin\Plugins\Menu::class,'update']);
+        Route::post('/menu/get_ext', [\App\Http\Controllers\Admin\Plugins\Menu::class,'extend']);
+        //menu items
+        Route::post('/menu/item/select', [\App\Http\Controllers\Admin\Plugins\MenuItem::class,'select']);
+        Route::post('/menu/item/insert', [\App\Http\Controllers\Admin\Plugins\MenuItem::class,'insert']);
+        Route::post('/menu/item/update', [\App\Http\Controllers\Admin\Plugins\MenuItem::class,'update']);
+        Route::post('/menu/item/get_ext', [\App\Http\Controllers\Admin\Plugins\MenuItem::class,'extend']);
+    });
 });
 

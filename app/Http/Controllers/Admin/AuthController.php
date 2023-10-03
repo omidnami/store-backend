@@ -49,9 +49,9 @@ class AuthController extends Controller
             ], 401);
         }
 
-
         $user = Auth::user();
-        if ($user->rol !== 1){
+
+        if ((int)$user->rol !== 1){
             return response()->json([
                 'status' => false,
                 'msg' => 'note_access',

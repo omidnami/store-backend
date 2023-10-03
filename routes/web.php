@@ -46,6 +46,8 @@ Route::prefix('wsd/v1/')->middleware(\App\Http\Middleware\DataUserSave::class)->
     Route::post('plugins/paralax',[\App\Http\Controllers\Front\Plugin::class,'paralax']);
     Route::post('plugins/product',[\App\Http\Controllers\Front\Plugin::class,'product']);
     Route::post('plugins/project',[\App\Http\Controllers\Front\Plugin::class,'project']);
+    Route::post('plugins/menu',[\App\Http\Controllers\Front\Plugin::class,'menu']);
+    Route::post('plugins/service_items',[\App\Http\Controllers\Front\Plugin::class,'serviceItems']);
     //product
     Route::post('product/cat',[\App\Http\Controllers\Front\Product::class,'cat']);
     Route::post('product/single',[\App\Http\Controllers\Front\Product::class,'single']);

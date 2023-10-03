@@ -21,6 +21,8 @@ class CreateServicesTable extends Migration
             $table->string('link');
             $table->string('uniqueId');
             $table->string('lang');
+            $table->boolean('status')->default(true);
+            $table->bigInteger('uid');
             $table->timestamps();
         });
     }

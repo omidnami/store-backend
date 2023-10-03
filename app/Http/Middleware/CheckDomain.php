@@ -18,5 +18,6 @@ class CheckDomain
     {
         error_log($request->header('origin'));
         return $next($request);
+
     }
 }

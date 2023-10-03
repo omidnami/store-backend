@@ -16,11 +16,13 @@ class CreateDraftsTable extends Migration
         Schema::create('drafts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('link');
-            $table->string('linkText');
+            $table->string('link')->nullable();
+            $table->string('linkText')->nullable();
             $table->string('target')->default('blank');
             $table->string('uniqueId');
             $table->string('lang');
+            $table->boolean('status')->default(true);
+            $table->bigInteger('user');
             $table->timestamps();
         });
     }

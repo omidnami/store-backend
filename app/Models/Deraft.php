@@ -9,4 +9,14 @@ class Deraft extends Model
 {
     use HasFactory;
     protected $table = 'drafts';
+    protected $fillable = [
+        'title',
+        'link',
+        'linkText',
+        'target',
+        'status',
+        'uniqueId',
+        'lang',
+        'user'
+    ];
 }

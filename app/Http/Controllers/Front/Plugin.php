@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Deraft;
 use App\Models\File;
+use App\Models\Menu;
+use App\Models\MenuItem;
 use App\Models\Product;
 use App\Models\Project;
 use App\Models\Service;
@@ -126,5 +128,15 @@ class Plugin extends Controller
             $res[] = $item;
         }
         return $res;
+    }
+
+    public function menu(Request $request) {
+        $menu = Menu::find($request->menu);
+        $item = MenuItem::where('menu' , $request->menu)->where('status', true)->get();
+        return (object)['title' => $menu->title, 'item' => $item];
+    }
+
+    public function serviceItems(Request $request){
+        return Service::where('status', true)->get();
     }
 }

@@ -18,8 +18,12 @@ class CreateBlogsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->foreignId('user_id');
-            $table->foreignIdFor(Blog_cat::class); // blog cat index id
+            $table->string('mainCat');
+            $table->bigInteger('user');
+            $table->json('cat'); // blog cat index id
+            $table->boolean('status')->default(true); // blog cat index id
+            $table->string('uniqueId'); // blog cat index id
+            $table->string('lang'); // blog cat index id
             $table->timestamps();
         });
     }
